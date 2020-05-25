@@ -2,34 +2,64 @@
 # dev by Jean Dubois
 # This program is in the public domain, open source.
 # Ce programme est dans le domaine public, en "open source"
-# dev from 02-19-2020 to 05-24-2020
-# developpé du 19/02/2020 au 24/05/2020
-# version 2.0.1 (release)
+# dev from 02-19-2020 to 05-25-2020
+# developpé du 19/02/2020 au 25/05/2020
+# version 2.0.2 (release)
 
 # Importation de Tkinter pour faire des fenêtres.
 from tkinter import *
 
-# création de la variable year
+# créaion de la variable year
 year = 0
 
 
 # definition de la commande qui récupère l'année
 def get_year():
+    # récupération de l'année
     global year
-    year = int(year_entry.get())
-    calcul()
+    # Vérification de la valeur donnée
+    try:
+        # Définition de l'année et lancement du calcul
+        year = int(year_entry.get())
+        calcul()
+    except ValueError:
+        # Renvoyer un message d'érreur
+        result_window = Tk()
+        result_window.title("Erreur")
+        result_window.geometry("300x50")
+        result_window.minsize(300, 50)
+        result_window.maxsize(500, 100)
+        result_window.iconbitmap('icon.ico')
+        result_window.config(background='#87CEEB')
+        error_label = Label(result_window, text="ERREUR : Vous devez entrer un nombre entier.", font=('Tahoma', 10),
+                            bg='#87CEEB')
+        error_label.pack()
+        result_window.mainloop()
 
 
 # definition de la commande qui calcule
 def calcul():
+    # récupération de l'année et de la fenêtre
     global year
     global main_window
+    # Vérification de l'année
+    # 'if' veut dire 'si' en anglais. 'else', c'est 'sinon', 'elif', c'est 'sinon, si'.
     if int(year) < 1583:
-        error_label = Label(frame1, text=("ERREUR : L'année doit être spérieure ou égale à 1583. Merci de spécifier une"
-                                          " autre année que " + str(year) + "."),
+        # Message d'érreur
+        result_window = Tk()
+        result_window.title("Erreur")
+        result_window.geometry("800x100")
+        result_window.minsize(800, 100)
+        result_window.maxsize(800, 100)
+        result_window.iconbitmap('icon.ico')
+        result_window.config(background='#87CEEB')
+        error_label = Label(result_window, text=("ERREUR : L'année doit être supérieure ou égale à 1583."
+                                                 " Merci de spécifier une autre année que " + str(year) + "."),
                             font=('Tahoma', 10), bg='#87CEEB')
         error_label.pack()
+        result_window.mainloop()
     else:
+        # CALCUL
         # Ici, le % permet de faire le modulo (le reste d'une division Euclidienne). +, *, - et / sont les opérations
         # mathématiques de base, à savoir respectivement addition, multiplication, soustraction et division.
         # 'int()' permet d'avoir la partie entière (le quotient) d'une division Euclidienne.
@@ -50,9 +80,7 @@ def calcul():
         lundi = j + 1
         mlundi = m
 
-        # correction pour lundi = 32 =======================================
-
-        # 'if' veut dire 'si' en anglais. 'else', c'est 'sinon', 'elif', c'est 'sinon, si'.
+        # correction pour lundi = 32
 
         if lundi == 32:
             lundi = "premier"
@@ -67,7 +95,7 @@ def calcul():
         # NOTE : pour le dimanche de pâques, pas besoin de faire la même correction que le lundi, car
         # si le dimanche est le 1er avril, comme en 2018, alors j = 0
 
-        # améliorations de la leture =======================================
+        # améliorations de la leture
 
         if m == 3:
             mstring = "mars"
@@ -85,11 +113,12 @@ def calcul():
         if lundi == 1:
             lundi = "premier"
 
-        # resultat
+        # résultat
         result_window = Tk()
         result_window.title("Résultat")
         result_window.geometry("500x100")
         result_window.minsize(500, 100)
+        result_window.maxsize(500, 100)
         result_window.iconbitmap('icon.ico')
         result_window.config(background='#87CEEB')
         result_label_sunday = Label(result_window, text=("Pour l'année " + str(year) + ", le dimanche de pâques tombe"
@@ -145,7 +174,7 @@ get_year_button.pack()
 frame1.pack(expand=YES)
 main_window.mainloop()
 
-
 # Le calcul a été trouvé sur : "https://fr.wikipedia.org/wiki/Calcul_de_la_date_de_P%C3%A2ques"
 
-# Merci d'avoir utilisé mon programme !
+print("À bientôt ;)")
+# Merci d'avoir utilisé mon programme :) !
