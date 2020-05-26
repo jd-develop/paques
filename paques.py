@@ -23,18 +23,30 @@ def get_year():
         year = int(year_entry.get())
         calcul()
     except ValueError:
-        # Renvoyer un message d'érreur
-        result_window = Tk()
-        result_window.title("Erreur")
-        result_window.geometry("300x50")
-        result_window.minsize(300, 50)
-        result_window.maxsize(500, 100)
-        result_window.iconbitmap('icon.ico')
-        result_window.config(background='#87CEEB')
-        error_label = Label(result_window, text="ERREUR : Vous devez entrer un nombre entier.", font=('Tahoma', 10),
-                            bg='#87CEEB')
-        error_label.pack()
-        result_window.mainloop()
+        if str(year_entry.get()) == "easter":
+            result_window = Tk()
+            result_window.title("Erreur")
+            result_window.geometry("300x50")
+            result_window.minsize(300, 50)
+            result_window.maxsize(500, 100)
+            result_window.iconbitmap('icon.ico')
+            result_window.config(background='#87CEEB')
+            easter_label = Label(result_window, text="EASTER EGG !", font=('Tahoma', 10), bg='#87CEEB')
+            easter_label.pack()
+            result_window.mainloop()
+        else:
+            # Renvoyer un message d'érreur
+            result_window = Tk()
+            result_window.title("Erreur")
+            result_window.geometry("300x50")
+            result_window.minsize(300, 50)
+            result_window.maxsize(500, 100)
+            result_window.iconbitmap('icon.ico')
+            result_window.config(background='#87CEEB')
+            error_label = Label(result_window, text="ERREUR : Vous devez entrer un nombre entier.", font=('Tahoma', 10),
+                                bg='#87CEEB')
+            error_label.pack()
+            result_window.mainloop()
 
 
 # definition de la commande qui calcule
@@ -133,7 +145,7 @@ def calcul():
         return [result_label_monday, result_label_sunday]
 
 
-__version__ = "2.0.1"
+__version__ = "2.0.2"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # Fabrication de la fenêtre
