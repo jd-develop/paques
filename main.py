@@ -6,10 +6,11 @@
 # Importation de Tkinter pour faire des fenêtres, de datetime pour calculer les dates, et de webbrowser pour ouvrir des
 # pages dans le navigateur.
 from tkinter import *
+from tkinter import messagebox
 from datetime import *
 import webbrowser
 
-__version__ = "3.1 (2020-06-07)"
+__version__ = "3.1.2 (2020-08-08)"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # créaion de la variable year (année)
@@ -56,20 +57,7 @@ def get_year():
             result_window.mainloop()
         elif str(year_entry.get()) == "":
             # Renvoyer un message d'érreur
-            result_window = Tk()
-            result_window.title("Erreur")
-            result_window.geometry("300x50")
-            result_window.minsize(300, 50)
-            result_window.maxsize(300, 50)
-            result_window.iconbitmap('icon.ico')
-            result_window.config(background='#87CEEB')
-            error_label = Label(result_window, text="ERREUR : Le champ d'entrée est vide.", font=('Tahoma', 10),
-                                bg='#87CEEB')
-            help_button = Button(result_window, text='?', font=('Tahoma', 10), bg='#87CEEB',
-                                 command=lambda: help_error_1())
-            error_label.pack()
-            help_button.pack()
-            result_window.mainloop()
+            error_1()
         else:
             # Renvoyer un message d'érreur
             result_window = Tk()
@@ -258,36 +246,15 @@ def about():
 
 
 def help_command():
-    result_window = Tk()
-    result_window.title("Aide")
-    result_window.geometry("800x50")
-    result_window.minsize(800, 50)
-    result_window.maxsize(800, 50)
-    result_window.iconbitmap('icon.ico')
-    result_window.config(background='#87CEEB')
-    help_label = Label(result_window, text="1583 est l'année à laquelle les années bissextiles (importantes dans le"
-                                           " calcul) telles que nous les connaissons aujourd'hui sont instaurées.",
-                       font=('Tahoma', 10), bg='#87CEEB')
-    help_label2 = Label(result_window, text="9999 est la dernière année que prends en charge l'outil Timedelta, nécess"
-                                            "aire au calcul de la pentecôte et de l'ascencion.",
-                        font=('Tahoma', 10), bg='#87CEEB')
-    help_label.pack()
-    help_label2.pack()
-    result_window.mainloop()
+    messagebox.showinfo("Aide", "1583 est l'année à laquelle les années bissextiles (importantes dans le calcul) te"
+                                "lles que nous les connaissons aujourd'hui sont instaurées.\n"
+                                "9999 est la dernière année que prends en charge l'outil Timedelta, nécessaire au c"
+                                "alcul de la pentecôte et de l'ascencion.")
+    
 
-
-def help_error_1():
-    result_window = Tk()
-    result_window.title("Aide")
-    result_window.geometry("400x50")
-    result_window.minsize(400, 50)
-    result_window.maxsize(400, 50)
-    result_window.iconbitmap('icon.ico')
-    result_window.config(background='#87CEEB')
-    help_label = Label(result_window, text="Vous devez entrer une année dans le champ d'entrée.", font=('Tahoma', 10),
-                       bg='#87CEEB')
-    help_label.pack()
-    result_window.mainloop()
+def error_1():
+    messagebox.showerror("Erreur", "ERREUR : Le champ d'entrée est vide.\n"
+                                   "Vous devez entrer une année dans le champ d'entrée")
 
 
 # Fabrication de la fenêtre
