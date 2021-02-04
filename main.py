@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# dévellopé Jean Dubois <jd-dev@laposte.net>
+# développé Jean Dubois <jd-dev@laposte.net>
 # Ce programme est dans le domaine public, en "open source"
 # Dévellopé pour un environnement python 3.
 
@@ -29,6 +29,7 @@ def get_year():
             calcul()
         else:
             # Renvoyer un message d'érreur
+            
             result_window = Tk()
             result_window.title("Erreur")
             result_window.geometry("400x50")
@@ -86,19 +87,37 @@ def calcul():
     # mathématiques de base, à savoir respectivement addition, multiplication, soustraction et division.
     # 'int()' permet d'avoir la partie entière (le quotient) d'une division Euclidienne.
     n = year % 19
+    print(n)
     c = int(year / 100)
+    print(c)
     u = year % 100
+    print(u)
     s = int(c / 4)
-    t = c & 4
+    print(s)
+    t = c % 4
+    print(t)
     p = int((c + 8) / 25)
+    print(p)
     q = int((c - p + 1) / 3)
+    print(q)
     e = (19 * n + c - s - q + 15) % 30
+    print(e)
     b = int(u / 4)
+    print(b)
     d = u % 4
-    lvariable = (2 * t + 2 * b - e - d + 32) % 7
-    h = int((n + 11 * e + 22 * lvariable) / 451)
-    m = int((e + lvariable - 7 * h + 114) / 31)
-    j = (e + lvariable - 7 * h + 114) % 31
+    print(d)
+    ld = (2 * t + 2 * b - e - d + 32) % 7  # dans le calcul sur Wiki, c'est L
+    print(ld)
+    h = int((n + 11 * e + 22 * ld) / 451)
+    print(h)
+    m = int((e + ld - 7 * h + 114) / 31)
+    print(m)
+    j = (e + ld - 7 * h + 114) % 31
+    print(j)
+
+    if m == 3 or m == 4:
+        j += 1
+    
     lundi = j + 1
     mlundi = m
     # correction pour lundi = 32
@@ -132,8 +151,10 @@ def calcul():
     # améliorations de la leture
     if m == 3:
         mstring = "mars"
-    else:
+    elif m == 4:
         mstring = "avril"
+    elif m == 5:
+        mstring == "mai"
 
     if int(mascension) == 3:
         mascensionstring = "mars"
@@ -166,10 +187,10 @@ def calcul():
     if lundi == 1:
         lundi = "premier"
 
-    if str(jascension) == "01":
+    if str(jascension) == "01" or jascension == 1:
         jascension = "premier"
 
-    if str(jpentecote) == "01":
+    if str(jpentecote) == "01" or jpentecote == 1:
         jpentecote = "premier"
 
     # tombe ou tombera ?
