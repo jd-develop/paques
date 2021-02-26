@@ -10,7 +10,7 @@ from tkinter import messagebox
 from datetime import *
 import webbrowser
 
-__version__ = "3.1.2 (2020-08-08)"
+__version__ = "21w08a (2021-02-26)"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # créaion de la variable year (année)
@@ -29,28 +29,19 @@ def get_year():
             calcul()
         else:
             # Renvoyer un message d'érreur
-            
-            result_window = Tk()
-            result_window.title("Erreur")
-            result_window.geometry("400x50")
-            result_window.minsize(400, 50)
-            result_window.maxsize(400, 50)
-            result_window.iconbitmap('icon.ico')
-            result_window.config(background='#87CEEB')
-            error_label = Label(result_window, text="ERREUR : L'année doit être comprise entre 1583 et 9999.",
-                                font=('Tahoma', 10), bg='#87CEEB')
-            help_button = Button(result_window, text='?', font=('Tahoma', 10), bg='#87CEEB',
-                                 command=lambda: help_command())
-            error_label.pack()
-            help_button.pack()
-            result_window.mainloop()
+            messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1583 et 9999."
+                                           "\n\nPLUS D'INFOS : \n"
+                                           "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
+                                           "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
+                                           "9999 est la dernière année que prends en charge l'outil Timedelta, nécessai"
+                                           "re au calcul de la pentecôte et de l'ascencion.")
     except ValueError:
         if str(year_entry.get()) == "easter":
             result_window = Tk()
             result_window.title("Easter egg")
             result_window.geometry("300x50")
             result_window.minsize(300, 50)
-            result_window.maxsize(300, 50)
+            result_window.resizable(False, False)
             result_window.iconbitmap('icon.ico')
             result_window.config(background='#87CEEB')
             easter_label = Label(result_window, text="EASTER EGG !", font=('Tahoma', 10), bg='#87CEEB')
@@ -61,20 +52,12 @@ def get_year():
             error_1()
         else:
             # Renvoyer un message d'érreur
-            result_window = Tk()
-            result_window.title("Erreur")
-            result_window.geometry("600x50")
-            result_window.minsize(600, 50)
-            result_window.maxsize(600, 50)
-            result_window.iconbitmap('icon.ico')
-            result_window.config(background='#87CEEB')
-            error_label = Label(result_window, text="ERREUR : Vous devez entrer un nombre entier compris entre 1583"
-                                                    " et 9999.", font=('Tahoma', 10), bg='#87CEEB')
-            help_button = Button(result_window, text='?', font=('Tahoma', 10), bg='#87CEEB',
-                                 command=lambda: help_command())
-            error_label.pack()
-            help_button.pack()
-            result_window.mainloop()
+            messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1583 et 9999."
+                                           "\n\nPLUS D'INFOS : \n"
+                                           "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
+                                           "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
+                                           "9999 est la dernière année que prends en charge l'outil Timedelta, nécessai"
+                                           "re au calcul de la pentecôte et de l'ascencion.")
 
 
 # definition de la commande qui calcule
@@ -87,33 +70,19 @@ def calcul():
     # mathématiques de base, à savoir respectivement addition, multiplication, soustraction et division.
     # 'int()' permet d'avoir la partie entière (le quotient) d'une division Euclidienne.
     n = year % 19
-    print(n)
     c = int(year / 100)
-    print(c)
     u = year % 100
-    print(u)
     s = int(c / 4)
-    print(s)
     t = c % 4
-    print(t)
     p = int((c + 8) / 25)
-    print(p)
     q = int((c - p + 1) / 3)
-    print(q)
     e = (19 * n + c - s - q + 15) % 30
-    print(e)
     b = int(u / 4)
-    print(b)
     d = u % 4
-    print(d)
     ld = (2 * t + 2 * b - e - d + 32) % 7  # dans le calcul sur Wiki, c'est L
-    print(ld)
     h = int((n + 11 * e + 22 * ld) / 451)
-    print(h)
     m = int((e + ld - 7 * h + 114) / 31)
-    print(m)
     j = (e + ld - 7 * h + 114) % 31
-    print(j)
 
     if m == 3 or m == 4:
         j += 1
@@ -219,7 +188,7 @@ def calcul():
     result_window.title("Résultat")
     result_window.geometry("500x100")
     result_window.minsize(500, 100)
-    result_window.maxsize(500, 100)
+    result_window.resizable(False, False)
     result_window.iconbitmap('icon.ico')
     result_window.config(background='#87CEEB')
     result_label_sunday = Label(result_window, text=("Pour l'année " + str(year) + ", le dimanche de pâques " + tot
@@ -245,7 +214,7 @@ def about():
     about_window.title("À propos de PâquesCalculator")
     about_window.geometry("800x200")
     about_window.minsize(800, 200)
-    about_window.maxsize(800, 200)
+    about_window.resizable(False, False)
     about_window.iconbitmap('icon.ico')
     about_window.config(background='#87CEEB')
     about_title = Label(about_window, text='PâquesCalculator', font=('Tahoma', 40), bg='#87CEEB')
@@ -264,13 +233,6 @@ def about():
     wiki_label.bind("<Button-1>",
                     lambda e: webbrowser.open_new(r"https://fr.wikipedia.org/wiki/Calcul_de_la_date_de_P%C3%A2ques"))
     about_window.mainloop()
-
-
-def help_command():
-    messagebox.showinfo("Aide", "1583 est l'année à laquelle les années bissextiles (importantes dans le calcul) te"
-                                "lles que nous les connaissons aujourd'hui sont instaurées.\n"
-                                "9999 est la dernière année que prends en charge l'outil Timedelta, nécessaire au c"
-                                "alcul de la pentecôte et de l'ascencion.")
     
 
 def error_1():
