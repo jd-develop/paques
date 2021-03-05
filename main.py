@@ -6,6 +6,7 @@
 # Importation de Tkinter pour faire des fenêtres, de datetime pour calculer les dates, et de webbrowser pour ouvrir des
 # pages dans le navigateur.
 from tkinter import *
+from tkinter import ttk
 from tkinter import messagebox
 from datetime import *
 import webbrowser
@@ -15,7 +16,6 @@ __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # créaion de la variable year (année)
 year = 0
-
 
 # definition de la commande qui récupère l'année
 def get_year():
@@ -63,8 +63,7 @@ def get_year():
 # definition de la commande qui calcule
 def calcul():
     # récupération de l'année et de la fenêtre
-    global year
-    global main_window
+    global year, main_window, tabs
     # CALCUL
     # Ici, le % permet de faire le modulo (le reste d'une division Euclidienne). +, *, - et / sont les opérations
     # mathématiques de base, à savoir respectivement addition, multiplication, soustraction et division.
@@ -184,29 +183,34 @@ def calcul():
         tot = 'tombait'
 
     # résultat
-    result_window = Tk()
-    result_window.title("Résultat")
-    result_window.geometry("500x100")
-    result_window.minsize(500, 100)
-    result_window.resizable(False, False)
-    result_window.iconbitmap('icon.ico')
-    result_window.config(background='#87CEEB')
-    result_label_sunday = Label(result_window, text=("Pour l'année " + str(year) + ", le dimanche de pâques " + tot
+    # result_window = Tk()
+    # result_window.title("Résultat")
+    # result_window.geometry("500x100")
+    # result_window.minsize(500, 100)
+    # result_window.resizable(False, False)
+    # result_window.iconbitmap('icon.ico')
+    # result_window.config(background='#87CEEB')
+    new_frame = Frame(tabs, bg='#87CEEB')
+    result_label_sunday = Label(new_frame, text=("Pour l'année " + str(year) + ", le dimanche de pâques " + tot
                                                      + " le " + str(j) + " " + mstring + ","), font=('Tahoma', 10),
                                 bg='#87CEEB')
-    result_label_monday = Label(result_window, text=("le lundi de pâques le " + str(lundi) + " " + mlstring + ", "),
+    result_label_monday = Label(new_frame, text=("le lundi de pâques le " + str(lundi) + " " + mlstring + ", "),
                                 font=('Tahoma', 10), bg='#87CEEB')
-    result_label_ascension = Label(result_window, text=("le jeudi de l'ascension le " + str(jascension) + " "
+    result_label_ascension = Label(new_frame, text=("le jeudi de l'ascension le " + str(jascension) + " "
                                                         + str(mascensionstring) + ","),
                                    font=('Tahoma', 10), bg='#87CEEB')
-    result_label_pentecote = Label(result_window, text=("et le dimanche de la pentecôte le " + str(jpentecote) + " "
+    result_label_pentecote = Label(new_frame, text=("et le dimanche de la pentecôte le " + str(jpentecote) + " "
                                                         + str(mpentecotestr) + "."),
                                    font=('Tahoma', 10), bg='#87CEEB')
+    close_tab_button = Button(new_frame, text=("Fermer"), font=('Tahoma', 10), bg='#87CEEB', command=lambda: tabs.forget(new_frame))
     result_label_sunday.pack()
     result_label_monday.pack()
     result_label_ascension.pack()
     result_label_pentecote.pack()
-    result_window.mainloop()
+    close_tab_button.pack()
+    tabs.add(new_frame, text=str(year))
+    tabs.select(new_frame)
+    # result_window.mainloop()
 
 
 def about():
@@ -248,8 +252,13 @@ main_window.minsize(900, 500)
 main_window.iconbitmap('icon.ico')
 main_window.config(background='#87CEEB')
 
+tabs = ttk.Notebook(main_window)
+
 # Fabrication d'une "boîte"
-frame1 = Frame(main_window, bg='#87CEEB')
+frame1 = Frame(tabs, bg='#87CEEB')
+# resultFrame = Frame(tabs, bg='#87CEEB')
+tabs.add(frame1, text="Onglet principal")
+tabs.pack(expand=1, fill="both")
 
 # Fabrication de texte à l'interieur de la boîte
 label_title = Label(frame1, text='PâquesCalculator', font=('Tahoma', 40), bg='#87CEEB')
@@ -285,7 +294,7 @@ menu_bar.add_cascade(label='Options', menu=file_menu)
 main_window.config(menu=menu_bar)
 
 # "Empaquetage" de la boîte et de la fenêtre
-frame1.pack(expand=YES)
+# frame1.pack(expand=YES)
 main_window.mainloop()
 
 # Merci d'avoir utilisé mon programme :) !
