@@ -11,11 +11,12 @@ from tkinter import messagebox
 from datetime import *
 import webbrowser
 
-__version__ = "21w08a (2021-02-26)"
+__version__ = "21w08b (2021-02-26)"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # créaion de la variable year (année)
 year = 0
+tabsList = []
 
 # definition de la commande qui récupère l'année
 def get_year():
@@ -183,6 +184,11 @@ def calcul():
         tot = 'tombait'
 
     # résultat
+    for tab in tabsList:
+        if str(tab[0]) == str(year):
+            tabs.select(tab[1])
+            return "YearCalculated"
+    
     # result_window = Tk()
     # result_window.title("Résultat")
     # result_window.geometry("500x100")
@@ -192,15 +198,15 @@ def calcul():
     # result_window.config(background='#87CEEB')
     new_frame = Frame(tabs, bg='#87CEEB')
     result_label_sunday = Label(new_frame, text=("Pour l'année " + str(year) + ", le dimanche de pâques " + tot
-                                                     + " le " + str(j) + " " + mstring + ","), font=('Tahoma', 10),
+                                                 + " le " + str(j) + " " + mstring + ","), font=('Tahoma', 10),
                                 bg='#87CEEB')
     result_label_monday = Label(new_frame, text=("le lundi de pâques le " + str(lundi) + " " + mlstring + ", "),
                                 font=('Tahoma', 10), bg='#87CEEB')
     result_label_ascension = Label(new_frame, text=("le jeudi de l'ascension le " + str(jascension) + " "
-                                                        + str(mascensionstring) + ","),
+                                                     + str(mascensionstring) + ","),
                                    font=('Tahoma', 10), bg='#87CEEB')
     result_label_pentecote = Label(new_frame, text=("et le dimanche de la pentecôte le " + str(jpentecote) + " "
-                                                        + str(mpentecotestr) + "."),
+                                                    + str(mpentecotestr) + "."),
                                    font=('Tahoma', 10), bg='#87CEEB')
     close_tab_button = Button(new_frame, text=("Fermer"), font=('Tahoma', 10), bg='#87CEEB', command=lambda: tabs.forget(new_frame))
     result_label_sunday.pack()
@@ -210,7 +216,8 @@ def calcul():
     close_tab_button.pack()
     tabs.add(new_frame, text=str(year))
     tabs.select(new_frame)
-    # result_window.mainloop()
+    tab_selected = [tabs.tab(tabs.select(), "text"), tabs.select()]
+    tabsList.append(tab_selected)
 
 
 def about():
