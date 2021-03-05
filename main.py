@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # développé Jean Dubois <jd-dev@laposte.net>
 # Ce programme est dans le domaine public, en "open source"
-# Dévellopé pour un environnement python 3.
+# Développé pour un environnement python 3.
 
 # Importation de Tkinter pour faire des fenêtres, de datetime pour calculer les dates, et de webbrowser pour ouvrir des
 # pages dans le navigateur.
@@ -14,9 +14,10 @@ import webbrowser
 __version__ = "21w08b (2021-02-26)"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
-# créaion de la variable year (année)
+# création de la variable year (année)
 year = 0
 tabsList = []
+
 
 # definition de la commande qui récupère l'année
 def get_year():
@@ -29,13 +30,13 @@ def get_year():
             year = int(year_entry.get())
             calcul()
         else:
-            # Renvoyer un message d'érreur
+            # Renvoyer un message d'erreur
             messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1583 et 9999."
                                            "\n\nPLUS D'INFOS : \n"
                                            "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
                                            "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
-                                           "9999 est la dernière année que prends en charge l'outil Timedelta, nécessai"
-                                           "re au calcul de la pentecôte et de l'ascencion.")
+                                           "9999 est la dernière année que prends en charge l'outil Timedelta,"
+                                           "nécessaire au calcul de la pentecôte et de l'ascension.")
     except ValueError:
         if str(year_entry.get()) == "easter":
             result_window = Tk()
@@ -49,16 +50,16 @@ def get_year():
             easter_label.pack()
             result_window.mainloop()
         elif str(year_entry.get()) == "":
-            # Renvoyer un message d'érreur
+            # Renvoyer un message d'erreur
             error_1()
         else:
-            # Renvoyer un message d'érreur
+            # Renvoyer un message d'erreur
             messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1583 et 9999."
                                            "\n\nPLUS D'INFOS : \n"
                                            "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
                                            "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
-                                           "9999 est la dernière année que prends en charge l'outil Timedelta, nécessai"
-                                           "re au calcul de la pentecôte et de l'ascencion.")
+                                           "9999 est la dernière année que prends en charge l'outil Timedelta"
+                                           "nécessaire au calcul de la pentecôte et de l'ascension.")
 
 
 # definition de la commande qui calcule
@@ -117,13 +118,15 @@ def calcul():
     mpentecote = pentecote[1]
     jpentecote = pentecote[2]
 
-    # améliorations de la leture
+    # améliorations de la lecture
     if m == 3:
         mstring = "mars"
     elif m == 4:
         mstring = "avril"
     elif m == 5:
-        mstring == "mai"
+        mstring = "mai"
+    else:
+        mstring = "errorno"
 
     if int(mascension) == 3:
         mascensionstring = "mars"
@@ -203,12 +206,13 @@ def calcul():
     result_label_monday = Label(new_frame, text=("le lundi de pâques le " + str(lundi) + " " + mlstring + ", "),
                                 font=('Tahoma', 10), bg='#87CEEB')
     result_label_ascension = Label(new_frame, text=("le jeudi de l'ascension le " + str(jascension) + " "
-                                                     + str(mascensionstring) + ","),
+                                                    + str(mascensionstring) + ","),
                                    font=('Tahoma', 10), bg='#87CEEB')
     result_label_pentecote = Label(new_frame, text=("et le dimanche de la pentecôte le " + str(jpentecote) + " "
                                                     + str(mpentecotestr) + "."),
                                    font=('Tahoma', 10), bg='#87CEEB')
-    close_tab_button = Button(new_frame, text=("Fermer"), font=('Tahoma', 10), bg='#87CEEB', command=lambda: tabs.forget(new_frame))
+    close_tab_button = Button(new_frame, text="Fermer", font=('Tahoma', 10), bg='#87CEEB',
+                              command=lambda: tabs.forget(new_frame))
     result_label_sunday.pack()
     result_label_monday.pack()
     result_label_ascension.pack()
@@ -267,7 +271,7 @@ frame1 = Frame(tabs, bg='#87CEEB')
 tabs.add(frame1, text="Onglet principal")
 tabs.pack(expand=1, fill="both")
 
-# Fabrication de texte à l'interieur de la boîte
+# Fabrication de texte à l'intérieur de la boîte
 label_title = Label(frame1, text='PâquesCalculator', font=('Tahoma', 40), bg='#87CEEB')
 label_title.pack()
 
@@ -278,7 +282,7 @@ label_subtitle1 = Label(frame1, text='', font=('Tahoma', 10), bg='#87CEEB')
 label_subtitle1.pack()
 
 label_subtitle2 = Label(frame1, text="Veuillez entrer l'année pour laquelle vous souhaitez connaître la date de pâques"
-                                     ", celle de l'ascencion et celle de la pentecôte :", font=('Tahoma', 10),
+                                     ", celle de l'ascension et celle de la pentecôte :", font=('Tahoma', 10),
                         bg='#87CEEB')
 label_subtitle2.pack()
 
