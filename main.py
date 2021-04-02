@@ -212,7 +212,9 @@ def calcul():
                                                     + str(mpentecotestr) + "."),
                                    font=('Tahoma', 10), bg='#87CEEB')
     close_tab_button = Button(new_frame, text="Fermer", font=('Tahoma', 10), bg='#87CEEB',
-                              command=lambda: tabs.forget(new_frame))
+                              command=(lambda tabsList: tabs.forget(new_frame), tabsList.remove(str(year))
+                                       )
+                              )
     result_label_sunday.pack()
     result_label_monday.pack()
     result_label_ascension.pack()
@@ -246,7 +248,7 @@ def about():
     subtitle.pack()
     wiki_label.pack()
     wiki_label.bind("<Button-1>",
-                    lambda e: webbrowser.open_new(r"https://fr.wikipedia.org/wiki/Calcul_de_la_date_de_P%C3%A2ques"))
+                    lambda: webbrowser.open_new(r"https://fr.wikipedia.org/wiki/Calcul_de_la_date_de_P%C3%A2ques"))
     about_window.mainloop()
     
 
