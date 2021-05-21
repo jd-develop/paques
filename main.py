@@ -24,31 +24,23 @@ def get_year():
     # récupération de l'année
     global year
     # Vérification de la valeur donnée
+    # try:
+    # Définition de l'année et lancement du calcul
     try:
-        # Définition de l'année et lancement du calcul
         if 9999 >= int(year_entry.get()) >= 1583:
             year = int(year_entry.get())
             calcul()
         else:
             # Renvoyer un message d'erreur
             messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1583 et 9999."
-                                           "\n\nPLUS D'INFOS : \n"
-                                           "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
-                                           "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
-                                           "9999 est la dernière année que prends en charge l'outil Timedelta,"
-                                           "nécessaire au calcul de la pentecôte et de l'ascension.")
+                                            "\n\nPLUS D'INFOS : \n"
+                                            "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
+                                            "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
+                                            "9999 est la dernière année que prends en charge l'outil Timedelta, "
+                                            "nécessaire au calcul de la pentecôte et de l'ascension.")
     except ValueError:
         if str(year_entry.get()) == "easter":
-            result_window = Tk()
-            result_window.title("Easter egg")
-            result_window.geometry("300x50")
-            result_window.minsize(300, 50)
-            result_window.resizable(False, False)
-            result_window.iconbitmap('icon.ico')
-            result_window.config(background='#87CEEB')
-            easter_label = Label(result_window, text="EASTER EGG !", font=('Tahoma', 10), bg='#87CEEB')
-            easter_label.pack()
-            result_window.mainloop()
+            messagebox.showinfo("Easter egg", "EASTER EGG (c'est le cas de le dire :P)")
         elif str(year_entry.get()) == "":
             # Renvoyer un message d'erreur
             error_1()
@@ -190,7 +182,7 @@ def calcul():
     for tab in tabsList:
         if str(tab[0]) == str(year):
             tabs.select(tab[1])
-            return "YearCalculated"
+            return "TabSelected"
     
     # result_window = Tk()
     # result_window.title("Résultat")
@@ -211,17 +203,24 @@ def calcul():
     result_label_pentecote = Label(new_frame, text=("et le dimanche de la pentecôte le " + str(jpentecote) + " "
                                                     + str(mpentecotestr) + "."),
                                    font=('Tahoma', 10), bg='#87CEEB')
-    close_tab_button = Button(new_frame, text="Fermer", font=('Tahoma', 10), bg='#87CEEB',
-                              command=lambda: tabs.forget(new_frame))
     result_label_sunday.pack()
     result_label_monday.pack()
     result_label_ascension.pack()
     result_label_pentecote.pack()
-    close_tab_button.pack()
     tabs.add(new_frame, text=str(year))
     tabs.select(new_frame)
     tab_selected = [tabs.tab(tabs.select(), "text"), tabs.select()]
     tabsList.append(tab_selected)
+    close_tab_button = Button(new_frame, text="Fermer", font=('Tahoma', 10), bg='#87CEEB',
+                              command=lambda: close_tab(new_frame, year, tab_selected))
+    close_tab_button.pack()
+
+
+def close_tab(tab_frame, tab_title, tab_name_in_list):
+    global tabs, tabsList, frame1
+    tabs.forget(tab_frame)
+    tabsList.remove(tab_name_in_list)
+    tabs.select(frame1)
 
 
 def about():
@@ -246,7 +245,7 @@ def about():
     subtitle.pack()
     wiki_label.pack()
     wiki_label.bind("<Button-1>",
-                    lambda e: webbrowser.open_new(r"https://fr.wikipedia.org/wiki/Calcul_de_la_date_de_P%C3%A2ques"))
+                    lambda: webbrowser.open_new(r"https://fr.wikipedia.org/wiki/Calcul_de_la_date_de_P%C3%A2ques"))
     about_window.mainloop()
     
 
