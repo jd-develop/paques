@@ -24,20 +24,19 @@ def get_year():
     # récupération de l'année
     global year
     # Vérification de la valeur donnée
-    # try:
-    # Définition de l'année et lancement du calcul
     try:
+        # Définition de l'année et lancement du calcul
         if 9999 >= int(year_entry.get()) >= 1583:
             year = int(year_entry.get())
             calcul()
         else:
             # Renvoyer un message d'erreur
             messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1583 et 9999."
-                                            "\n\nPLUS D'INFOS : \n"
-                                            "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
-                                            "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
-                                            "9999 est la dernière année que prends en charge l'outil Timedelta, "
-                                            "nécessaire au calcul de la pentecôte et de l'ascension.")
+                                           "\n\nPLUS D'INFOS : \n"
+                                           "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
+                                           "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
+                                           "9999 est la dernière année que prends en charge l'outil Timedelta, "
+                                           "nécessaire au calcul de la pentecôte et de l'ascension.")
     except ValueError:
         if str(year_entry.get()) == "easter":
             messagebox.showinfo("Easter egg", "EASTER EGG (c'est le cas de le dire :P)")
