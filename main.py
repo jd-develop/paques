@@ -11,7 +11,7 @@ from tkinter import messagebox
 from datetime import *
 import webbrowser
 
-__version__ = "21w20a (2021-02-26)"
+__version__ = "4.0-rc1 (2021-06-11)"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # création de la variable year (année)
@@ -253,6 +253,15 @@ def error_1():
                                    "Vous devez entrer une année dans le champ d'entrée")
 
 
+def pressed_enter(event):
+    get_year()
+
+
+def go_to_home_tab(event):
+    global tabs, frame1
+    tabs.select(frame1)
+
+
 # Fabrication de la fenêtre
 main_window = Tk()
 main_window.title("PâquesCalculator")
@@ -296,14 +305,20 @@ get_year_button.pack()
 # Barre de menus
 menu_bar = Menu(main_window)
 file_menu = Menu(menu_bar, tearoff=0)
-file_menu.add_command(label='Soumettre cette année', command=lambda: get_year())
+file_menu.add_command(label='Soumettre cette année', command=lambda: get_year(), accelerator="Entrée")
 file_menu.add_command(label='À propos de PâquesCalculator', command=lambda: about())
-file_menu.add_command(label='Quitter', command=lambda: quit(0))
+file_menu.add_separator()
+file_menu.add_command(label="Retour à l'onglet principal", command=lambda: tabs.select(frame1), accelerator="F1")
+file_menu.add_command(label='Quitter', command=lambda: quit(0), accelerator="Ctrl+q")
 menu_bar.add_cascade(label='Options', menu=file_menu)
 main_window.config(menu=menu_bar)
 
 # "Empaquetage" de la boîte et de la fenêtre
 # frame1.pack(expand=YES)
+year_entry.focus()
+main_window.bind('<Return>', pressed_enter)
+main_window.bind('<F1>', go_to_home_tab)
+main_window.bind('<Control-q>', exit)
 main_window.mainloop()
 
 # Merci d'avoir utilisé mon programme :) !
