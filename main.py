@@ -267,7 +267,10 @@ main_window = Tk()
 main_window.title("PâquesCalculator")
 main_window.geometry("900x500")
 main_window.minsize(900, 500)
-main_window.iconbitmap('icon.ico')
+try:
+    main_window.iconbitmap('icon.ico')
+except TclError:
+    pass
 main_window.config(background='#87CEEB')
 
 tabs = ttk.Notebook(main_window)
