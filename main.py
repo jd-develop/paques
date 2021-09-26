@@ -11,7 +11,7 @@ from tkinter import messagebox
 from datetime import *
 import webbrowser
 
-__version__ = "4.0-rc2 (2021-08-31)"
+__version__ = "4.0 (2021-09-26)"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # création de la variable year (année)
