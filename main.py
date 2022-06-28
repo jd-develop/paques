@@ -22,6 +22,7 @@ from tkinter import ttk
 from tkinter import messagebox
 from datetime import *
 import webbrowser
+import sys
 
 BACKGROUND = '#87CEEB'
 
@@ -31,6 +32,24 @@ __author__ = "Jean Dubois <jd-dev@laposte.net>"
 # création de la variable year (année)
 year = 0
 tabsList = []
+
+
+def int_month_to_str_month(month_int: int):
+    calendar_ = {
+        "1": "janvier",
+        "2": "février",
+        "3": "mars",
+        "4": "avril",
+        "5": "mai",
+        "6": "juin",
+        "7": "juillet",
+        "8": "août",
+        "9": "septembre",
+        "10": "octobre",
+        "11": "novembre",
+        "12": "décembre",
+    }
+    return calendar_[str(month_int)]
 
 
 # definition de la commande qui récupère l'année
@@ -115,39 +134,13 @@ def calcul(year_):
     jour_pentecote = pentecote_timedelta.day
 
     # améliorations de la lecture
-    if m == 3:
-        str_month = "mars"
-    elif m == 4:
-        str_month = "avril"
-    elif m == 5:
-        str_month = "mai"
-    else:
-        str_month = "errorno"
+    str_month = int_month_to_str_month(m)
 
-    if int(mois_ascension) == 3:
-        mois_ascension_str = "mars"
-    elif int(mois_ascension) == 4:
-        mois_ascension_str = "avril"
-    elif int(mois_ascension) == 5:
-        mois_ascension_str = "mai"
-    else:
-        mois_ascension_str = "juin"
+    mois_ascension_str = int_month_to_str_month(mois_ascension)
 
-    if int(mois_pentecote) == 3:
-        mois_pentecote_str = "mars"
-    elif int(mois_pentecote) == 4:
-        mois_pentecote_str = "avril"
-    elif int(mois_pentecote) == 5:
-        mois_pentecote_str = "mai"
-    elif int(mois_pentecote) == 6:
-        mois_pentecote_str = "juin"
-    else:
-        mois_pentecote_str = "juillet"
+    mois_pentecote_str = int_month_to_str_month(mois_pentecote)
 
-    if mois_lundi == 3:
-        mois_lundi_str = "mars"
-    else:
-        mois_lundi_str = "avril"
+    mois_lundi_str = int_month_to_str_month(mois_lundi)
 
     if j == 1:
         j = "premier"
@@ -155,10 +148,10 @@ def calcul(year_):
     if lundi == 1:
         lundi = "premier"
 
-    if str(jour_ascension) == "01" or jour_ascension == 1:
+    if jour_ascension == 1:
         jour_ascension = "premier"
 
-    if str(jour_pentecote) == "01" or jour_pentecote == 1:
+    if jour_pentecote == 1:
         jour_pentecote = "premier"
 
     # tombe ou tombera ?
@@ -334,7 +327,7 @@ main_window.config(menu=menu_bar)
 year_entry.focus()
 main_window.bind('<Return>', pressed_enter)
 main_window.bind('<F1>', go_to_home_tab)
-main_window.bind('<Control-q>', exit)
+main_window.bind('<Control-q>', sys.exit)
 main_window.mainloop()
 
 # Merci d'avoir utilisé mon programme :) !
