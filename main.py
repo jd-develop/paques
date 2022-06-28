@@ -30,7 +30,6 @@ __version__ = "4.0 (2021-09-26)"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # création de la variable year (année)
-year = 0
 tabsList = []
 
 
@@ -52,22 +51,20 @@ def int_month_to_str_month(month_int: int):
     return calendar_[str(month_int)]
 
 
-# definition de la commande qui récupère l'année
 def get_year():
-    # récupération de l'année
-    global year
     # Vérification de la valeur donnée
     try:
         # Définition de l'année et lancement du calcul
-        if 9999 >= int(year_entry.get()) >= 1583:
+        if 9999 >= int(year_entry.get()) >= 1:
             year = int(year_entry.get())
             calcul(year)
         else:
             # Renvoyer un message d'erreur
-            messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1583 et 9999."
+            messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1 et 9999."
                                            "\n\nPLUS D'INFOS : \n"
-                                           "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
-                                           "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
+                                           "1 est la première année où pâques est célébrée. Il est à noter que ce"
+                                           "programme utilise un calcul différent entre 1 et 1582 (calendrier julien)"
+                                           "et entre 1583 et 9999 (calendrier grégorien jusqu'alors)\n"
                                            "9999 est la dernière année que prends en charge l'outil Timedelta, "
                                            "nécessaire au calcul de la pentecôte et de l'ascension.")
     except ValueError:
@@ -78,10 +75,11 @@ def get_year():
             error_1()
         else:
             # Renvoyer un message d'erreur
-            messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1583 et 9999."
+            messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1 et 9999."
                                            "\n\nPLUS D'INFOS : \n"
-                                           "1583 est l'année à laquelle les années bissextiles (importantes dans le cal"
-                                           "cul) telles que nous les connaissons aujourd'hui sont instaurées.\n"
+                                           "1 est la première année où pâques est célébrée. Il est à noter que ce"
+                                           "programme utilise un calcul différent entre 1 et 1582 (calendrier julien)"
+                                           "et entre 1583 et 9999 (calendrier grégorien jusqu'alors)\n"
                                            "9999 est la dernière année que prends en charge l'outil Timedelta, "
                                            "nécessaire au calcul de la pentecôte et de l'ascension.")
 
@@ -91,20 +89,33 @@ def calcul(year_):
     # récupération de l'année et de la fenêtre
     global main_window, tabs
     # CALCUL
-    n = year_ % 19
-    c = int(year_ / 100)
-    u = year_ % 100
-    s = int(c / 4)
-    t = c % 4
-    p = int((c + 8) / 25)
-    q = int((c - p + 1) / 3)
-    e = (19 * n + c - s - q + 15) % 30
-    b = int(u / 4)
-    d = u % 4
-    ld = (2 * t + 2 * b - e - d + 32) % 7  # dans le calcul sur Wiki, c'est L
-    h = int((n + 11 * e + 22 * ld) / 451)
-    m = int((e + ld - 7 * h + 114) / 31)
-    j = (e + ld - 7 * h + 114) % 31
+    if year_ >= 1583:
+        n = year_ % 19
+        c = int(year_ / 100)
+        u = year_ % 100
+        s = int(c / 4)
+        t = c % 4
+        p = int((c + 8) / 25)
+        q = int((c - p + 1) / 3)
+        e = (19 * n + c - s - q + 15) % 30
+        b = int(u / 4)
+        d = u % 4
+        ld = (2 * t + 2 * b - e - d + 32) % 7  # dans le calcul sur Wiki, c'est L
+        h = int((n + 11 * e + 22 * ld) / 451)
+        m = int((e + ld - 7 * h + 114) / 31)
+        j = (e + ld - 7 * h + 114) % 31
+    else:
+        # calcul trouvé sur :
+        # https://codes-sources.commentcamarche.net/source/21243-calcul-de-la-date-de-paques-ascension-et-pentecote
+        # ça reprend le calcul de S Butcher : https://play.google.com/books/reader?id=qbA-rzFsIoMC&pg=GBS.PR12&hl=fr
+        # je ne l'ai pas trouvé dans le livre par contre.... je serai intéressé de connaître la page :)
+        a = year_ % 19
+        e = year_ % 4
+        i = year_ % 7
+        h = (19*a + 15) % 30
+        r = (34 + 2*e + 4*i - h) % 7
+        m = int((h + r + 114) / 31)
+        j = ((h + r + 114) % 31) + 1
 
     if m == 3 or m == 4:
         j += 1
@@ -123,7 +134,7 @@ def calcul(year_):
     # NOTE : pour le dimanche de pâques, pas besoin de faire la même correction que le lundi, car
     # si le dimanche est le 1er avril, comme en 2018, alors j = 0
 
-    paques_timedelta = datetime(year, m, j)
+    paques_timedelta = datetime(year_, m, j)
     
     ascension_timedelta = paques_timedelta + timedelta(39)
     mois_ascension = ascension_timedelta.month
@@ -158,7 +169,7 @@ def calcul(year_):
     current_year = datetime.today().strftime("%Y")
     current_month = datetime.today().strftime("%m")
     current_day = datetime.today().strftime("%d")
-    if year == int(current_year):
+    if year_ == int(current_year):
         if m == int(current_month):
             if j > int(current_day):
                 tot = 'tombera'
@@ -170,21 +181,21 @@ def calcul(year_):
             tot = 'tombera'
         else:
             tot = 'tombait'
-    elif year > int(current_year):
+    elif year_ > int(current_year):
         tot = 'tombera'
     else:
         tot = 'tombait'
 
     # résultat
     for tab in tabsList:
-        if str(tab[0]) == str(year):
+        if str(tab[0]) == str(year_):
             tabs.select(tab[1])
             return "TabSelected"
 
     new_frame = Frame(tabs, bg=BACKGROUND)
     result_label_sunday = Label(
         new_frame,
-        text=f"Pour l'année {year}, le dimanche de pâques {tot} le {j} {str_month},",
+        text=f"Pour l'année {year_}, le dimanche de pâques {tot} le {j} {str_month},",
         font=('Tahoma', 10),
         bg=BACKGROUND
     )
@@ -212,7 +223,7 @@ def calcul(year_):
     result_label_ascension.pack()
     result_label_pentecote.pack()
 
-    tabs.add(new_frame, text=str(year))
+    tabs.add(new_frame, text=str(year_))
     tabs.select(new_frame)
     tab_selected = [tabs.tab(tabs.select(), "text"), tabs.select()]
     tabsList.append(tab_selected)
