@@ -26,7 +26,7 @@ import sys
 
 BACKGROUND = '#87CEEB'
 
-__version__ = "4.0 (2021-09-26)"
+__version__ = "22w26a (2022-06-28)"
 __author__ = "Jean Dubois <jd-dev@laposte.net>"
 
 # création de la variable year (année)
