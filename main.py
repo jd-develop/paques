@@ -84,9 +84,13 @@ def get_year():
                                            "nécessaire au calcul de la pentecôte et de l'ascension.")
 
 
-# definition de la commande qui calcule
 def calcul(year_):
-    # récupération de l'année et de la fenêtre
+    """
+    Calcule la date de pâques en fonction de l'année. Fabrique également l'onglet de la réponse.
+    :param year_: int between 1 and 9999
+    :return: None
+    """
+    # récupération des onglets et de la fenêtre
     global main_window, tabs
     # CALCUL
     if year_ >= 1583:
