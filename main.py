@@ -62,11 +62,10 @@ def get_year():
             # Renvoyer un message d'erreur
             messagebox.showerror("Erreur", "ERREUR : Vous devez entrer un nombre entier compris entre 1 et 9999."
                                            "\n\nPLUS D'INFOS : \n"
-                                           "1 est la première année où pâques est célébrée. Il est à noter que ce"
-                                           "programme utilise un calcul différent entre 1 et 1582 (calendrier julien)"
-                                           "et entre 1583 et 9999 (calendrier grégorien jusqu'alors)\n"
-                                           "9999 est la dernière année que prends en charge l'outil Timedelta, "
-                                           "nécessaire au calcul de la pentecôte et de l'ascension.")
+                                           "1 et 9999 sont les limitations de l’outil Timedelta, "
+                                           "nécessaire au calcul de la pentecôte et de l’ascension. "
+                                           "Il est à noter que ce programme utilise un calcul différent entre 1 et "
+                                           "1582 (calendrier julien) et entre 1583 et 9999 (calendrier grégorien).")
     except ValueError:
         if str(year_entry.get()) == "easter":
             messagebox.showinfo("Easter egg", "EASTER EGG (c'est le cas de le dire :P)")
@@ -180,15 +179,15 @@ def calcul(year_):
             elif j == int(current_day):
                 tot = 'tombe'
             else:
-                tot = 'tombait'
+                tot = 'est tombé'
         elif m > int(current_month):
             tot = 'tombera'
         else:
-            tot = 'tombait'
+            tot = 'est tombé'
     elif year_ > int(current_year):
         tot = 'tombera'
     else:
-        tot = 'tombait'
+        tot = 'est tombé'
 
     # résultat
     for tab in tabsList:
@@ -199,7 +198,7 @@ def calcul(year_):
     new_frame = Frame(tabs, bg=BACKGROUND)
     result_label_sunday = Label(
         new_frame,
-        text=f"Pour l'année {year_}, le dimanche de pâques {tot} le {j} {str_month},",
+        text=f"En {year_}, le dimanche de pâques {tot} le {j} {str_month},",
         font=('Tahoma', 10),
         bg=BACKGROUND
     )
